@@ -1,0 +1,38 @@
+header {
+  background-color: rgb(59, 4, 109);
+  color: white;
+}
+
+img {
+  width: 100%;
+}
+
+.input-Box {
+  margin-top: 10px;
+}
+
+label,
+input,
+textarea {
+  width: 100%;
+  display: block;
+}
+
+input {
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 60px;
+  margin-top: 10px;
+}
+
+button {
+  float: right;
+  background-color: rgb(38, 3, 112);
+  color: white;
+  padding: 5px;
+  border-radius: 10%;
+  margin-top: 5px;
+}
