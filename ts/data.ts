@@ -1,10 +1,3 @@
-const data = {
-  view: 'entry-form',
-  entries: [] as FormEntry[],
-  editing: null,
-  nextEntryId: 1,
-};
-
 function writeData(): void {
   const dataJSON: string = JSON.stringify(data);
   localStorage.setItem('data-storage', dataJSON);
@@ -15,11 +8,13 @@ function readData(): any {
   if (dataJSON) {
     return JSON.parse(dataJSON);
   } else {
-    return data;
+    return {
+      view: 'entry-form',
+      entries: [] as FormEntry[],
+      editing: null,
+      nextEntryId: 1,
+    };
   }
 }
 
-const savedData = readData();
-if (savedData) {
-  Object.assign(data, savedData);
-}
+const data = readData();

@@ -6,7 +6,6 @@ if (!$photoPreview) throw new Error('$photoPreview not found');
 $photoInput.addEventListener('input', (event) => {
   const $input = event.target;
   $photoPreview.src = $input.value;
-  writeData();
 });
 const $form = document.querySelector('#contact-form');
 if (!$form) throw new Error('$form not found');

@@ -21,7 +21,6 @@ if (!$photoPreview) throw new Error('$photoPreview not found');
 $photoInput.addEventListener('input', (event: Event) => {
   const $input = event.target as HTMLInputElement;
   $photoPreview.src = $input.value;
-  writeData();
 });
 
 const $form = document.querySelector('#contact-form') as HTMLFormElement;

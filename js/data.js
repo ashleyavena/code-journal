@@ -1,10 +1,4 @@
 'use strict';
-const data = {
-  view: 'entry-form',
-  entries: [],
-  editing: null,
-  nextEntryId: 1,
-};
 function writeData() {
   const dataJSON = JSON.stringify(data);
   localStorage.setItem('data-storage', dataJSON);
@@ -14,10 +8,12 @@ function readData() {
   if (dataJSON) {
     return JSON.parse(dataJSON);
   } else {
-    return data;
+    return {
+      view: 'entry-form',
+      entries: [],
+      editing: null,
+      nextEntryId: 1,
+    };
   }
 }
-const savedData = readData();
-if (savedData) {
-  Object.assign(data, savedData);
-}
+const data = readData();
