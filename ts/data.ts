@@ -1,6 +1,6 @@
 const data = {
   view: 'entry-form',
-  entries: [],
+  entries: [] as FormEntry[],
   editing: null,
   nextEntryId: 1,
 };

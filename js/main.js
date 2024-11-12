@@ -7,3 +7,20 @@ $photoInput.addEventListener('input', (event) => {
   const $input = event.target;
   $photoPreview.src = $input.value;
 });
+const $form = document.querySelector('#contact-form');
+if (!$form) throw new Error('$form not found');
+$form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const $contactFormElements = $form.elements;
+  const formObject = {
+    title: $contactFormElements.title.value,
+    url: $contactFormElements.url.value,
+    notes: $contactFormElements.notes.value,
+    entryID: data.nextEntryId,
+  };
+  data.nextEntryId++;
+  data.entries.unshift(formObject);
+  console.log('form data', formObject);
+  $photoPreview.src = 'images/placeholder-image-square.jpg';
+  $form.reset();
+});
