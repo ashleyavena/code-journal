@@ -15,6 +15,11 @@ function readData(): any {
   if (dataJSON) {
     return JSON.parse(dataJSON);
   } else {
-    return [];
+    return data;
   }
+}
+
+const savedData = readData();
+if (savedData) {
+  Object.assign(data, savedData);
 }

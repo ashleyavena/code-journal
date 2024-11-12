@@ -21,6 +21,7 @@ if (!$photoInput) throw new Error('$photoInput not found');
 $photoInput.addEventListener('input', (event: Event) => {
   const $input = event.target as HTMLInputElement;
   $photoPreview.src = $input.value;
+  // writeData();?? am i modifying data here ? i don't think so
 });
 
 const $form = document.querySelector('#contact-form') as HTMLFormElement;
@@ -40,4 +41,5 @@ $form.addEventListener('submit', (event: Event) => {
   console.log('form data', formObject);
   $photoPreview.src = 'images/placeholder-image-square.jpg';
   $form.reset();
+  writeData();
 });
