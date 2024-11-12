@@ -21,7 +21,6 @@ $form.addEventListener('submit', (event) => {
   };
   data.nextEntryId++;
   data.entries.unshift(formObject);
-  console.log('form data', formObject);
   $photoPreview.src = 'images/placeholder-image-square.jpg';
   $form.reset();
   writeData();
