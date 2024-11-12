@@ -41,3 +41,12 @@ $form.addEventListener('submit', (event: Event) => {
   $form.reset();
   writeData();
 });
+
+function renderEntry(entry: FormEntry): HTMLElement {
+  const $li = document.createElement('li');
+  const $strong = document.createElement('strong');
+  $strong.textContent = entry.title;
+  $li.appendChild($strong);
+
+  return $li;
+}
