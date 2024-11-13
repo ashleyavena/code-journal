@@ -50,3 +50,13 @@ function renderEntry(entry: FormEntry): HTMLElement {
 
   return $li;
 }
+
+const $ul = document.querySelector('ul');
+if (!$ul) throw new Error('$ul not found');
+
+document.addEventListener('DOMContentLoaded', () => {
+  for (let i = 0; i < data.entries; i++) {
+    const $newEntry = renderEntry(data.entries[i]);
+    $ul.appendChild($newEntry);
+  }
+});
