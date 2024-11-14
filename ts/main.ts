@@ -121,3 +121,15 @@ function viewSwap(viewName: string): any {
 
 toggleNoEntries();
 viewSwap('commit -m');
+
+const $viewEntriesLink = document.querySelector(
+  '#view-entries-link',
+) as HTMLAnchorElement;
+if (!$viewEntriesLink) throw new Error('$viewEntriesLink not found');
+
+function handleViewSwap(event: Event): void {
+  event.preventDefault();
+  viewSwap('entries');
+}
+
+$viewEntriesLink.addEventListener('click', handleViewSwap);

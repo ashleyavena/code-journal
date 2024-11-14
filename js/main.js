@@ -83,3 +83,12 @@ function viewSwap(viewName) {
     $entriesView.classList.remove('hidden');
   }
 }
+toggleNoEntries();
+viewSwap('commit -m');
+const $viewEntriesLink = document.querySelector('#view-entries-link');
+if (!$viewEntriesLink) throw new Error('$viewEntriesLink not found');
+function handleViewSwap(event) {
+  event.preventDefault();
+  viewSwap('entries');
+}
+$viewEntriesLink.addEventListener('click', handleViewSwap);
