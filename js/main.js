@@ -57,11 +57,12 @@ function renderEntry(entry) {
 const $ul = document.querySelector('ul');
 if (!$ul) throw new Error('$ul not found');
 document.addEventListener('DOMContentLoaded', () => {
-  // toggleNoEntries();
   for (let i = 0; i < data.entries; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $ul.appendChild($newEntry);
   }
+  viewSwap(data.view);
+  toggleNoEntries();
 });
 console.log(renderEntry(data));
 const $noEntriesMessage = document.querySelector('.no-entries');
