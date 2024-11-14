@@ -26,16 +26,54 @@ $form.addEventListener('submit', (event) => {
 });
 function renderEntry(entry) {
   const $li = document.createElement('li');
+  const $rowDiv = document.createElement('div');
+  $rowDiv.className = 'row';
+  $li.appendChild($rowDiv);
+  const $imageColumn = document.createElement('div');
+  $imageColumn.className = 'column-half';
+  $rowDiv.appendChild($imageColumn);
+  const $img = document.createElement('img');
+  $img.src = 'images/placeholder-image-square.jpg';
+  $img.alt = 'placeholder image';
+  $img.className = 'photo-preview';
+  $imageColumn.appendChild($img);
+  const $textColumn = document.createElement('div');
+  $textColumn.className = 'column-half';
+  $rowDiv.appendChild($textColumn);
+  const $titleParagraph = document.createElement('p');
   const $strong = document.createElement('strong');
   $strong.textContent = entry.title;
-  $li.appendChild($strong);
+  $titleParagraph.appendChild($strong);
+  $textColumn.appendChild($titleParagraph);
+  const $descriptionParagraph = document.createElement('p');
+  $descriptionParagraph.textContent = 'i guess its not a new image';
+  $textColumn.appendChild($descriptionParagraph);
   return $li;
 }
 const $ul = document.querySelector('ul');
 if (!$ul) throw new Error('$ul not found');
 document.addEventListener('DOMContentLoaded', () => {
+  // toggleNoEntries();
   for (let i = 0; i < data.entries; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $ul.appendChild($newEntry);
   }
 });
+console.log(renderEntry(data));
+const $noEntriesMessage = document.querySelector('.no-entries');
+if (!$noEntriesMessage) throw new Error('$noEntriesMessage not found');
+function toggleNoEntries() {
+  if (data.entries.length > 0) {
+    $noEntriesMessage.style.display = 'none';
+  } else {
+    $noEntriesMessage.style.display = 'block';
+    $ul.innerHTML = '';
+  }
+}
+toggleNoEntries();
+// function renderNoEntries(): HTMLElement {
+//   const $message = document.createElement('p');
+//   $message.className = 'no-entries-message';
+//   $message.textContent = 'No entries have been recorded';
+//   return $message;
+// }
