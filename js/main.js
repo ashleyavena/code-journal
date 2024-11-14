@@ -78,18 +78,22 @@ if (!$entriesView) throw new Error('$entriesView was not found');
 const $entryFormView = document.querySelector('[data-view="entry-form"]');
 if (!$entryFormView) throw new Error('$entryFormView was not found');
 function viewSwap(viewName) {
-  $entryFormView.classList.add('hidden');
-  $entriesView.classList.add('hidden');
+  data.view = viewName;
   if (viewName === 'entry-form') {
     $entryFormView.classList.remove('hidden');
+    $entriesView.classList.add('hidden');
   } else if (viewName === 'entries') {
     $entriesView.classList.remove('hidden');
+    $entryFormView.classList.add('hidden');
   }
 }
-const $viewEntriesLink = document.querySelector('#view-entries-link');
-if (!$viewEntriesLink) throw new Error('$viewEntriesLink not found');
-function handleViewSwap(event) {
-  event.preventDefault();
+const $newEntryButton = document.querySelector('.new-entry-button');
+if (!$newEntryButton) throw new Error('$newEntryButton not found');
+const $entriesLinkButton = document.querySelector('.entries-link');
+if (!$entriesLinkButton) throw new Error('$entriesLinkButton not found');
+$newEntryButton.addEventListener('click', () => {
+  viewSwap('entry-form');
+});
+$entriesLinkButton.addEventListener('click', () => {
   viewSwap('entries');
-}
-$viewEntriesLink.addEventListener('click', handleViewSwap);
+});

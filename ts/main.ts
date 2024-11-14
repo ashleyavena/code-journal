@@ -109,29 +109,32 @@ const $entriesView = document.querySelector(
   '[data-view="entries"]',
 ) as HTMLElement;
 if (!$entriesView) throw new Error('$entriesView was not found');
+
 const $entryFormView = document.querySelector(
   '[data-view="entry-form"]',
 ) as HTMLElement;
 if (!$entryFormView) throw new Error('$entryFormView was not found');
 
 function viewSwap(viewName: string): any {
-  $entryFormView.classList.add('hidden');
-  $entriesView.classList.add('hidden');
+  data.view = viewName;
   if (viewName === 'entry-form') {
     $entryFormView.classList.remove('hidden');
+    $entriesView.classList.add('hidden');
   } else if (viewName === 'entries') {
     $entriesView.classList.remove('hidden');
+    $entryFormView.classList.add('hidden');
   }
 }
 
-const $viewEntriesLink = document.querySelector(
-  '#view-entries-link',
-) as HTMLAnchorElement;
-if (!$viewEntriesLink) throw new Error('$viewEntriesLink not found');
+const $newEntryButton = document.querySelector('.new-entry-button');
+if (!$newEntryButton) throw new Error('$newEntryButton not found');
+const $entriesLinkButton = document.querySelector('.entries-link');
+if (!$entriesLinkButton) throw new Error('$entriesLinkButton not found');
 
-function handleViewSwap(event: Event): void {
-  event.preventDefault();
+$newEntryButton.addEventListener('click', () => {
+  viewSwap('entry-form');
+});
+
+$entriesLinkButton.addEventListener('click', () => {
   viewSwap('entries');
-}
-
-$viewEntriesLink.addEventListener('click', handleViewSwap);
+});
