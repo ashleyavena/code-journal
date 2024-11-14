@@ -37,7 +37,7 @@ function renderEntry(entry) {
   $imageColumn.className = 'column-half';
   $rowDiv.appendChild($imageColumn);
   const $img = document.createElement('img');
-  $img.src = 'images/placeholder-image-square.jpg';
+  $img.src = entry.photoURL;
   $img.alt = 'placeholder image';
   $img.className = 'photo-preview';
   $imageColumn.appendChild($img);
@@ -50,21 +50,20 @@ function renderEntry(entry) {
   $titleParagraph.appendChild($strong);
   $textColumn.appendChild($titleParagraph);
   const $descriptionParagraph = document.createElement('p');
-  $descriptionParagraph.textContent = 'i guess its not a new image';
+  $descriptionParagraph.textContent = entry.notes;
   $textColumn.appendChild($descriptionParagraph);
   return $li;
 }
 const $ul = document.querySelector('ul');
 if (!$ul) throw new Error('$ul not found');
 document.addEventListener('DOMContentLoaded', () => {
-  for (let i = 0; i < data.entries; i++) {
+  for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $ul.appendChild($newEntry);
   }
   viewSwap(data.view);
   toggleNoEntries();
 });
-console.log(renderEntry(data));
 const $noEntriesMessage = document.querySelector('.no-entries');
 if (!$noEntriesMessage) throw new Error('$noEntriesMessage not found');
 function toggleNoEntries() {
@@ -72,7 +71,6 @@ function toggleNoEntries() {
     $noEntriesMessage.classList.add('hidden');
   } else {
     $noEntriesMessage.classList.remove('hidden');
-    $ul.innerHTML = '';
   }
 }
 const $entriesView = document.querySelector('[data-view="entries"]');
@@ -88,8 +86,6 @@ function viewSwap(viewName) {
     $entriesView.classList.remove('hidden');
   }
 }
-toggleNoEntries();
-viewSwap('commit -m');
 const $viewEntriesLink = document.querySelector('#view-entries-link');
 if (!$viewEntriesLink) throw new Error('$viewEntriesLink not found');
 function handleViewSwap(event) {
