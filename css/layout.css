@@ -1,5 +1,5 @@
 .hidden {
-  display: none !important;
+  /* display: none !important; */
 }
 
 .container {
@@ -31,4 +31,10 @@
   .column-half {
     width: 50%;
   }
+}
+
+.entries-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

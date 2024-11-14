@@ -40,8 +40,20 @@ button {
   padding: 5px;
   border-radius: 10%;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 ul {
   list-style-type: none;
+}
+
+.new-entry-button {
+  float: right;
+  background-color: rgb(38, 3, 112);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10%;
+  margin-top: 10px;
+  cursor: pointer;
+  display: inline;
 }
