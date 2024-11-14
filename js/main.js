@@ -64,16 +64,22 @@ const $noEntriesMessage = document.querySelector('.no-entries');
 if (!$noEntriesMessage) throw new Error('$noEntriesMessage not found');
 function toggleNoEntries() {
   if (data.entries.length > 0) {
-    $noEntriesMessage.style.display = 'none';
+    $noEntriesMessage.classList.add('hidden');
   } else {
-    $noEntriesMessage.style.display = 'block';
+    $noEntriesMessage.classList.remove('hidden');
     $ul.innerHTML = '';
   }
 }
-toggleNoEntries();
-// function renderNoEntries(): HTMLElement {
-//   const $message = document.createElement('p');
-//   $message.className = 'no-entries-message';
-//   $message.textContent = 'No entries have been recorded';
-//   return $message;
-// }
+const $entriesView = document.querySelector('[data-view="entries"]');
+if (!$entriesView) throw new Error('$entriesView was not found');
+const $entryFormView = document.querySelector('[data-view="entry-form"]');
+if (!$entryFormView) throw new Error('$entryFormView was not found');
+function viewSwap(viewName) {
+  $entryFormView.classList.add('hidden');
+  $entriesView.classList.add('hidden');
+  if (viewName === 'entry-form') {
+    $entryFormView.classList.remove('hidden');
+  } else if (viewName === 'entries') {
+    $entriesView.classList.remove('hidden');
+  }
+}
