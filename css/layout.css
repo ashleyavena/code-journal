@@ -32,3 +32,9 @@
     width: 50%;
   }
 }
+
+.entries-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
