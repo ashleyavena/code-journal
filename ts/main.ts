@@ -54,6 +54,7 @@ function renderEntry(entry: FormEntry): HTMLElement {
   const $rowDiv = document.createElement('div');
   $rowDiv.className = 'row';
   $li.appendChild($rowDiv);
+  $li.setAttribute('data-entry-id', entry.entryID.toString());
 
   const $imageColumn = document.createElement('div');
   $imageColumn.className = 'column-half';
@@ -74,6 +75,10 @@ function renderEntry(entry: FormEntry): HTMLElement {
   $strong.textContent = entry.title;
   $titleParagraph.appendChild($strong);
   $textColumn.appendChild($titleParagraph);
+
+  const $fontPencil = document.createElement('i');
+  $fontPencil.className = 'fa fa-pencil';
+  $titleParagraph.appendChild($fontPencil);
 
   const $descriptionParagraph = document.createElement('p');
   $descriptionParagraph.textContent = entry.notes;

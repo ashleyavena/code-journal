@@ -74,3 +74,14 @@ ul {
 h1 {
   margin: 15px;
 }
+
+p {
+  display: flex;
+}
+
+.fa-pencil {
+  color: #333;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: auto;
+}
