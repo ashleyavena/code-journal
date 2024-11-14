@@ -37,7 +37,14 @@ $form.addEventListener('submit', (event: Event) => {
   };
   data.nextEntryId++;
   data.entries.unshift(formObject);
+
   $photoPreview.src = 'images/placeholder-image-square.jpg';
+
+  const $newEntry = renderEntry(formObject);
+  $ul.prepend($newEntry);
+  viewSwap('entries');
+  toggleNoEntries();
+
   $form.reset();
   writeData();
 });
