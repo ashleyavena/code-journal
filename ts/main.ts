@@ -143,3 +143,36 @@ $newEntryButton.addEventListener('click', () => {
 $entriesLinkButton.addEventListener('click', () => {
   viewSwap('entries');
 });
+
+$ul.addEventListener('click', (event: Event) => {
+  const $eventTarget = event.target as HTMLElement;
+  if ($eventTarget.matches('fa-pencil')) {
+    viewSwap('entry-form');
+    const $findLi = $eventTarget.closest('li') as HTMLElement;
+    const $getLi = $findLi.getAttribute('data-entry-id');
+
+    let $matchedEntry = null;
+
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryID === $getLi) {
+        $matchedEntry = data.entries[i];
+      } else if ($matchedEntry) {
+        data.editing = $matchedEntry;
+        const $formStuff = $form.elements as FormElements;
+        $formStuff.title.value = data.editing.title;
+        $formStuff.photoURL.value = data.editing.photoURL;
+        $formStuff.notes.value = data.editing.notes;
+      } else {
+        $h2Title.textContent = 'Edit Entry';
+      }
+    }
+  }
+});
+
+const $h2Title = document.querySelector(
+  '[data-view="entry-form"] h2',
+) as HTMLElement;
+
+// const entryToEdit = data.entries.find('data-entry-id');
+// data.editing = entryToEdit;
+// then loop over data .entries and find the object with the entry ID that matches that attribute
