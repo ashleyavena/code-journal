@@ -20,13 +20,36 @@ $form.addEventListener('submit', (event) => {
   };
   data.nextEntryId++;
   data.entries.unshift(formObject);
+  writeData();
   $photoPreview.src = 'images/placeholder-image-square.jpg';
   const $newEntry = renderEntry(formObject);
   $ul.prepend($newEntry);
-  viewSwap('entries');
   toggleNoEntries();
+  if (data.editing === null) {
+    event.preventDefault();
+    data.nextEntryId++;
+    data.entries.unshift(formObject);
+    const $newEntry = renderEntry(formObject);
+    $ul.prepend($newEntry);
+  } else {
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryID === data.editing.entryID) {
+        data.entries[i] = formObject;
+        const $oldEntry = $ul.querySelector(
+          `li[data-entry-id="${data.editing.entryID}"]`,
+        );
+        const $updatedEntry = renderEntry(formObject);
+        if ($oldEntry) {
+          $oldEntry.replaceWith($updatedEntry);
+        }
+        break;
+      }
+    }
+    $h2Title.textContent = 'New Entry';
+    data.editing = null;
+  }
   $form.reset();
-  writeData();
+  viewSwap('entries');
 });
 function renderEntry(entry) {
   const $li = document.createElement('li');
@@ -108,7 +131,7 @@ $ul.addEventListener('click', (event) => {
     const $findLi = $eventTarget.closest('li');
     const $getLi = $findLi.getAttribute('data-entry-id');
     for (let i = 0; i < data.entries.length; i++) {
-      if (data.entries[i].entryID === +$getLi) {
+      if (data.entries[i].entryID === Number($getLi)) {
         data.editing = data.entries[i];
         $photoPreview.src = data.editing.photoURL;
         const $formStuff = $form.elements;
