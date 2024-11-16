@@ -18,22 +18,16 @@ $form.addEventListener('submit', (event) => {
     notes: $contactFormElements.notes.value,
     entryID: data.nextEntryId,
   };
-  data.nextEntryId++;
-  data.entries.unshift(formObject);
-  writeData();
-  $photoPreview.src = 'images/placeholder-image-square.jpg';
-  const $newEntry = renderEntry(formObject);
-  $ul.prepend($newEntry);
-  toggleNoEntries();
   if (data.editing === null) {
-    event.preventDefault();
-    data.nextEntryId++;
     data.entries.unshift(formObject);
+    data.nextEntryId++;
+    writeData();
     const $newEntry = renderEntry(formObject);
     $ul.prepend($newEntry);
   } else {
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryID === data.editing.entryID) {
+        formObject.entryID = data.editing.entryID;
         data.entries[i] = formObject;
         const $oldEntry = $ul.querySelector(
           `li[data-entry-id="${data.editing.entryID}"]`,
@@ -48,6 +42,8 @@ $form.addEventListener('submit', (event) => {
     $h2Title.textContent = 'New Entry';
     data.editing = null;
   }
+  $photoPreview.src = 'images/placeholder-image-square.jpg';
+  toggleNoEntries();
   $form.reset();
   viewSwap('entries');
 });
