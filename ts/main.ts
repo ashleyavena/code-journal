@@ -35,18 +35,35 @@ $form.addEventListener('submit', (event: Event) => {
     notes: $contactFormElements.notes.value,
     entryID: data.nextEntryId,
   };
-  data.nextEntryId++;
-  data.entries.unshift(formObject);
 
+  if (data.editing === null) {
+    data.entries.unshift(formObject);
+    data.nextEntryId++;
+    writeData();
+    const $newEntry = renderEntry(formObject);
+    $ul.prepend($newEntry);
+  } else {
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryID === data.editing.entryID) {
+        formObject.entryID = data.editing.entryID;
+        data.entries[i] = formObject;
+        const $oldEntry = $ul.querySelector(
+          `li[data-entry-id="${data.editing.entryID}"]`,
+        );
+        const $updatedEntry = renderEntry(formObject);
+        if ($oldEntry) {
+          $oldEntry.replaceWith($updatedEntry);
+        }
+        break;
+      }
+    }
+    $h2Title.textContent = 'New Entry';
+    data.editing = null;
+  }
   $photoPreview.src = 'images/placeholder-image-square.jpg';
-
-  const $newEntry = renderEntry(formObject);
-  $ul.prepend($newEntry);
-  viewSwap('entries');
   toggleNoEntries();
-
   $form.reset();
-  writeData();
+  viewSwap('entries');
 });
 
 function renderEntry(entry: FormEntry): HTMLElement {
@@ -54,6 +71,7 @@ function renderEntry(entry: FormEntry): HTMLElement {
   const $rowDiv = document.createElement('div');
   $rowDiv.className = 'row';
   $li.appendChild($rowDiv);
+  $li.setAttribute('data-entry-id', entry.entryID.toString());
 
   const $imageColumn = document.createElement('div');
   $imageColumn.className = 'column-half';
@@ -74,6 +92,10 @@ function renderEntry(entry: FormEntry): HTMLElement {
   $strong.textContent = entry.title;
   $titleParagraph.appendChild($strong);
   $textColumn.appendChild($titleParagraph);
+
+  const $fontPencil = document.createElement('i');
+  $fontPencil.className = 'fa fa-pencil';
+  $titleParagraph.appendChild($fontPencil);
 
   const $descriptionParagraph = document.createElement('p');
   $descriptionParagraph.textContent = entry.notes;
@@ -138,3 +160,29 @@ $newEntryButton.addEventListener('click', () => {
 $entriesLinkButton.addEventListener('click', () => {
   viewSwap('entries');
 });
+
+$ul.addEventListener('click', (event: Event) => {
+  const $eventTarget = event.target as HTMLElement;
+  if ($eventTarget.matches('.fa-pencil')) {
+    viewSwap('entry-form');
+    const $findLi = $eventTarget.closest('li') as HTMLElement;
+    const $getLi = $findLi.getAttribute('data-entry-id');
+
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryID === Number($getLi)) {
+        data.editing = data.entries[i];
+        $photoPreview.src = data.editing.photoURL;
+
+        const $formStuff = $form.elements as FormElements;
+        $formStuff.title.value = data.editing.title;
+        $formStuff.photoURL.value = data.editing.photoURL;
+        $formStuff.notes.value = data.editing.notes;
+        $h2Title.textContent = 'Edit Entry';
+      }
+    }
+  }
+});
+
+const $h2Title = document.querySelector(
+  '[data-view="entry-form"] h2',
+) as HTMLElement;
