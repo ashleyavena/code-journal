@@ -178,10 +178,69 @@ $ul.addEventListener('click', (event: Event) => {
         $formStuff.photoURL.value = data.editing.photoURL;
         $formStuff.notes.value = data.editing.notes;
         $h2Title.textContent = 'Edit Entry';
+        $deleteButton?.classList.remove('hidden');
       }
     }
   }
 });
+
+const $deleteButton = document.querySelector('#delete-button');
+if (!$deleteButton) throw new Error('$deleteButton not found');
+
+const $dontDelete = document.querySelector('.dont-delete');
+if (!$dontDelete) throw new Error('$dontDelete not found');
+
+const $confirmDelete = document.querySelector('.confirm-delete');
+if (!$confirmDelete) throw new Error('$confirmDelete not found');
+
+const $dialog = document.querySelector('dialog');
+if (!$dialog) throw new Error('$dialog not found');
+
+$deleteButton.addEventListener('click', () => {
+  $dialog.showModal();
+});
+
+$dontDelete.addEventListener('click', () => {
+  $dialog.close();
+});
+
+$confirmDelete.addEventListener('click', () => {
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryID === data.editing.entryID) {
+      data.entries.splice(i, 1);
+      const $deleteLi = document.querySelector(
+        `li[data-entry-id="${data.editing.entryId}"]`,
+      ) as HTMLElement;
+      $deleteLi.remove();
+      if (data.entries.length === 0) {
+        toggleNoEntries();
+      }
+      $dialog.close();
+      data.editing = null;
+      viewSwap('entries');
+      return;
+    }
+  }
+});
+
+// $confirmModal.addEventListener('click', () => {
+//   for (const key in data.entries) {
+//     if (data.entries[key].entryId === data.editing?.entryId) {
+//       data.entries.splice(+key, 1);
+//       const $deleteLi = document.querySelector(
+//         `[data-entry-id="${data.editing.entryId}"]`,
+//       ) as HTMLElement;
+//       $deleteLi.remove();
+//       if (data.entries.length === 0) {
+//         toggleNoEntries();
+//       }
+//       $dialog.close();
+//       data.editing = null;
+//       viewSwap('entries');
+//       return;
+//     }
+//   }
+// });
 
 const $h2Title = document.querySelector(
   '[data-view="entry-form"] h2',
