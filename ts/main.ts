@@ -10,21 +10,43 @@ interface FormEntry {
   notes: string;
 }
 
+const $noEntriesMessage = document.querySelector('.no-entries') as HTMLElement;
+if (!$noEntriesMessage) throw new Error('$noEntriesMessage not found');
+
 const $photoInput = document.querySelector('.photo-input') as HTMLInputElement;
 if (!$photoInput) throw new Error('$photoInput not found');
+
+const $form = document.querySelector('#contact-form') as HTMLFormElement;
+if (!$form) throw new Error('$form not found');
+
+const $ul = document.querySelector('ul') as HTMLElement;
+if (!$ul) throw new Error('$ul not found');
 
 const $photoPreview = document.querySelector(
   '.photo-preview',
 ) as HTMLImageElement;
 if (!$photoPreview) throw new Error('$photoPreview not found');
 
+const $entriesView = document.querySelector(
+  '[data-view="entries"]',
+) as HTMLElement;
+if (!$entriesView) throw new Error('$entriesView was not found');
+
+const $entryFormView = document.querySelector(
+  '[data-view="entry-form"]',
+) as HTMLElement;
+if (!$entryFormView) throw new Error('$entryFormView was not found');
+
+const $newEntryButton = document.querySelector('.new-entry-button');
+if (!$newEntryButton) throw new Error('$newEntryButton not found');
+
+const $entriesLinkButton = document.querySelector('.entries-link');
+if (!$entriesLinkButton) throw new Error('$entriesLinkButton not found');
+
 $photoInput.addEventListener('input', (event: Event) => {
   const $input = event.target as HTMLInputElement;
   $photoPreview.src = $input.value;
 });
-
-const $form = document.querySelector('#contact-form') as HTMLFormElement;
-if (!$form) throw new Error('$form not found');
 
 $form.addEventListener('submit', (event: Event) => {
   event.preventDefault();
@@ -104,9 +126,6 @@ function renderEntry(entry: FormEntry): HTMLElement {
   return $li;
 }
 
-const $ul = document.querySelector('ul') as HTMLElement;
-if (!$ul) throw new Error('$ul not found');
-
 document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
@@ -116,9 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleNoEntries();
 });
 
-const $noEntriesMessage = document.querySelector('.no-entries') as HTMLElement;
-if (!$noEntriesMessage) throw new Error('$noEntriesMessage not found');
-
 function toggleNoEntries(): any {
   if (data.entries.length > 0) {
     $noEntriesMessage.classList.add('hidden');
@@ -126,16 +142,6 @@ function toggleNoEntries(): any {
     $noEntriesMessage.classList.remove('hidden');
   }
 }
-
-const $entriesView = document.querySelector(
-  '[data-view="entries"]',
-) as HTMLElement;
-if (!$entriesView) throw new Error('$entriesView was not found');
-
-const $entryFormView = document.querySelector(
-  '[data-view="entry-form"]',
-) as HTMLElement;
-if (!$entryFormView) throw new Error('$entryFormView was not found');
 
 function viewSwap(viewName: string): any {
   data.view = viewName;
@@ -147,11 +153,6 @@ function viewSwap(viewName: string): any {
     $entryFormView.classList.add('hidden');
   }
 }
-
-const $newEntryButton = document.querySelector('.new-entry-button');
-if (!$newEntryButton) throw new Error('$newEntryButton not found');
-const $entriesLinkButton = document.querySelector('.entries-link');
-if (!$entriesLinkButton) throw new Error('$entriesLinkButton not found');
 
 $newEntryButton.addEventListener('click', () => {
   viewSwap('entry-form');
@@ -187,8 +188,8 @@ $ul.addEventListener('click', (event: Event) => {
 const $deleteButton = document.querySelector('#delete-button');
 if (!$deleteButton) throw new Error('$deleteButton not found');
 
-const $dontDelete = document.querySelector('.dont-delete');
-if (!$dontDelete) throw new Error('$dontDelete not found');
+const $cancelButton = document.querySelector('.dont-delete');
+if (!$cancelButton) throw new Error('$cancelButton not found');
 
 const $confirmDelete = document.querySelector('.confirm-delete');
 if (!$confirmDelete) throw new Error('$confirmDelete not found');
@@ -200,16 +201,16 @@ $deleteButton.addEventListener('click', () => {
   $dialog.showModal();
 });
 
-$dontDelete.addEventListener('click', () => {
+$cancelButton.addEventListener('click', () => {
   $dialog.close();
 });
 
 $confirmDelete.addEventListener('click', () => {
-  for (let i = 0; i < data.entries.length; i++) {
-    if (data.entries[i].entryID === data.editing.entryID) {
-      data.entries.splice(i, 1);
+  for (const key in data.entries) {
+    if (data.entries[key].entryId === data.editing?.entryId) {
+      data.entries.splice(+key, 1);
       const $deleteLi = document.querySelector(
-        `li[data-entry-id="${data.editing.entryId}"]`,
+        `li[data-entry-id="${data.editing.entryID}"]`,
       ) as HTMLElement;
       $deleteLi.remove();
       if (data.entries.length === 0) {
@@ -223,12 +224,12 @@ $confirmDelete.addEventListener('click', () => {
   }
 });
 
-// $confirmModal.addEventListener('click', () => {
-//   for (const key in data.entries) {
-//     if (data.entries[key].entryId === data.editing?.entryId) {
-//       data.entries.splice(+key, 1);
+// $confirmDelete.addEventListener('click', () => {
+//   for (let i = 0; i < data.entries.length; i++) {
+//     if (data.entries[i].entryID === data.editing?.entryID) {
+//       data.entries.splice(i, 1);
 //       const $deleteLi = document.querySelector(
-//         `[data-entry-id="${data.editing.entryId}"]`,
+//         `li[data-entry-id="${data.editing.entryID}"]`,
 //       ) as HTMLElement;
 //       $deleteLi.remove();
 //       if (data.entries.length === 0) {
