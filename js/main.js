@@ -22,6 +22,7 @@ $photoInput.addEventListener('input', (event) => {
   $photoPreview.src = $input.value;
 });
 $form.addEventListener('submit', (event) => {
+  console.log('hello');
   event.preventDefault();
   const $contactFormElements = $form.elements;
   const formObject = {
@@ -155,9 +156,9 @@ $cancelButton.addEventListener('click', () => {
   $dialog.close();
 });
 $confirmDelete.addEventListener('click', () => {
-  for (const key in data.entries) {
-    if (data.entries[key].entryId === data.editing?.entryId) {
-      data.entries.splice(+key, 1);
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryID === data.editing?.entryID) {
+      data.entries.splice(i, 1);
       const $deleteLi = document.querySelector(
         `li[data-entry-id="${data.editing.entryID}"]`,
       );
@@ -168,26 +169,9 @@ $confirmDelete.addEventListener('click', () => {
       $dialog.close();
       data.editing = null;
       viewSwap('entries');
+      writeData();
       return;
     }
   }
 });
-// $confirmDelete.addEventListener('click', () => {
-//   for (let i = 0; i < data.entries.length; i++) {
-//     if (data.entries[i].entryID === data.editing?.entryID) {
-//       data.entries.splice(i, 1);
-//       const $deleteLi = document.querySelector(
-//         `li[data-entry-id="${data.editing.entryID}"]`,
-//       ) as HTMLElement;
-//       $deleteLi.remove();
-//       if (data.entries.length === 0) {
-//         toggleNoEntries();
-//       }
-//       $dialog.close();
-//       data.editing = null;
-//       viewSwap('entries');
-//       return;
-//     }
-//   }
-// });
 const $h2Title = document.querySelector('[data-view="entry-form"] h2');
