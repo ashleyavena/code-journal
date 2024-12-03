@@ -60,7 +60,16 @@
             <div class="column-full">
               <label for="notes">Notes</label>
               <textarea id="notes" class="big-input-box"></textarea>
-              <div><button type="submit" id="save-button">SAVE</button></div>
+              <div class="footer-buttons">
+                <button
+                  type="button"
+                  id="delete-button"
+                  class="hidden open-modal">
+                  Delete Entry
+                </button>
+
+                <button type="submit" id="save-button">SAVE</button>
+              </div>
             </div>
           </div>
         </form>
@@ -78,6 +87,11 @@
         <!-- <i class="fa-solid fa-pencil"></i> -->
       </div>
     </main>
+    <dialog>
+      <h2>Are you sure you want to delete?</h2>
+      <button class="dont-delete">Cancel</button>
+      <button class="confirm-delete">Confirm</button>
+    </dialog>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
   </body>

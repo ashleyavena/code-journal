@@ -33,10 +33,26 @@ textarea {
   margin-top: 10px;
 }
 
-button {
-  float: right;
+.footer-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#save-button {
+  margin-left: auto;
   background-color: rgb(38, 3, 112);
   color: white;
+  padding: 5px;
+  border-radius: 10%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#delete-button {
+  border-color: transparent;
+  background-color: transparent;
+  color: red;
+  text-decoration: underline;
   padding: 5px;
   border-radius: 10%;
   margin-top: 10px;
